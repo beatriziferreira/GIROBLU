@@ -22,6 +22,21 @@ public class Estacao {
         return veiculos;
     }
 
-    
+    public void adicionarVeiculo(Veiculo veiculo) {
+        if (veiculos.size() < qtdVagas) {
+            veiculos.add(veiculo);
+            System.out.println("Veículo adicionado: " + veiculo.getDescricao());
+        } else {
+            System.out.println("Não há vagas disponíveis na estação " + nome);
+        }
+    }
 
+    public void removerVeiculo(Veiculo veiculo) {
+        if (veiculos.remove(veiculo)) {
+            System.out.println("Veículo removido: " + veiculo.getDescricao());
+        } else {
+            System.out.println("Veículo não encontrado na estação " + nome);
+        }
+    }
+    
 }
