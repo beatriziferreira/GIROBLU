@@ -27,7 +27,7 @@ public class Estacao {
             veiculos.add(veiculo);
             System.out.println("Veículo adicionado: " + veiculo.getDescricao());
         } else {
-            System.out.println("Não há vagas disponíveis na estação " + nome);
+            throw new IllegalStateException("Não há vagas disponíveis na estação " + nome);
         }
     }
 

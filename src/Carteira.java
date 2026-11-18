@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Carteira {
     private double saldo;
     private int id;
-    private ArrayList<Lancamento> lancamentos = new ArrayList<>();
+    private ArrayList<Recarga> recargas = new ArrayList<>();
 
     public Carteira() {
         this.saldo = 0.0;
@@ -18,10 +18,10 @@ public class Carteira {
         return id;
     }
 
-    public void adicionarLancamento(Lancamento lancamento) {
-        lancamentos.add(lancamento);
-        saldo += lancamento.getValor();
-        System.out.println("Lancamento adicionado: " + lancamento.getValor() + " em " + lancamento.getData() + " às " + lancamento.getHora());
+    public void adicionarRecarga(Recarga recarga) {
+        recargas.add(recarga);
+        saldo += recarga.getValor();
+        System.out.println("recarga adicionado: " + recarga.getValor() + " em " + recarga.getData() + " às " + recarga.getHora());
         System.out.println("Novo saldo: " + saldo);
     }
 }
