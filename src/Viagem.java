@@ -1,16 +1,15 @@
-import java.time.LocalDateTime;
 
 public class Viagem {
-    private LocalDateTime inicio;
-    private LocalDateTime termino;
+    private int inicio;
+    private int termino;
     private Usuario usuario;
     private Veiculo veiculo;
     private Estacao estacaoOrigem;
     private Estacao estacaoDestino;
     private boolean emAndamento;
 
-    public Viagem(LocalDateTime inicio, Usuario usuario, Veiculo veiculo, Estacao estacaoOrigem) {
-        this.inicio = inicio;
+    public Viagem(int inicio, Usuario usuario, Veiculo veiculo, Estacao estacaoOrigem) {
+        this.inicio = inicio * 60; // Convertendo para minutos
         this.usuario = usuario;
         this.veiculo = veiculo;
         this.estacaoOrigem = estacaoOrigem;
@@ -20,32 +19,35 @@ public class Viagem {
         if (veiculo.liberar()) {
             this.emAndamento = true;
             estacaoOrigem.removerVeiculo(veiculo);
+            int minutos = 0;
+            try {
+                while (emAndamento) {
+                    minutos ++;
+                    if (veiculo instanceof Recarregavel) {
+                        ((Recarregavel) veiculo).descontarBateria();
+                    }
+                }
+            } catch (IllegalStateException e) {
+                System.out.println(e.getMessage());
+                this.emAndamento = false;
+                this.termino = this.inicio + (minutos * 60);
+            }
         }
     }
 
-    public void encerrar(LocalDateTime termino, Estacao destino) {
+    public void encerrar(int termino, Estacao destino) {
         this.emAndamento = false;
-        this.termino = termino;
+        this.termino = termino * 60; // Convertendo para minutos
         this.estacaoDestino = destino;
         estacaoDestino.adicionarVeiculo(veiculo);
-        System.out.println("Viagem finalizada em " + this.termino + " na estação " + estacaoDestino);
+        System.out.println("Viagem finalizada ás/ao " + this.termino + " na estação " + estacaoDestino);
     }
 
-    public void ViagemEmAndamento() {
-        try {
-            if (veiculo instanceof Recarregavel) {
-                ((Recarregavel) veiculo).descontarBateria(duracaoTotal());
-            }
-        } catch (IllegalStateException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public LocalDateTime getInicio() {
+    public int getInicio() {
         return inicio;
     }
 
-    public LocalDateTime getTermino() {
+    public int getTermino() {
         return termino;
     }
 
@@ -70,12 +72,12 @@ public class Viagem {
     }
 
     public int duracaoTotal() {
-        int totalMin = termino.getMinute() - inicio.getMinute();
-        return totalMin;
+        int totalMinutos = termino - inicio;
+        return totalMinutos;
     }
 
     public double valorCobrado() {
-        return 0;
+        return duracaoTotal() * veiculo.valorPorMin();
     }
 
 }

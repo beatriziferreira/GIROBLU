@@ -13,12 +13,21 @@ public abstract class Veiculo {
 
     public boolean liberar(){
         if (status.equals("Em uso")){
-            throw new IllegalStateException("O veículo já está em uso.");
+            System.out.println("O veículo já está em uso.");
+            return false;
         } else if (status.equals("Em Manutenção")){
-            throw new IllegalStateException("O veículo está em manutenção.");
+            System.out.println("O veículo está em manutenção.");
+            return false;
         }
         status = "Em uso";
         return true;
+    }
+
+    public void finalizarUso() {
+        if (status.equals("Disponível")) {
+            System.out.println("O veículo não está em uso.");
+        }
+        status = "Disponível";
     }
 
     public int getCodigo() {
