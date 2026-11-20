@@ -1,4 +1,4 @@
-public class BicicletaEletrica extends Veiculo implements Recarregavel{
+public class BicicletaEletrica extends Veiculo implements Recarregavel {
     private int bateria;
 
     public BicicletaEletrica(String descricao) {
@@ -12,12 +12,13 @@ public class BicicletaEletrica extends Veiculo implements Recarregavel{
     }
 
     @Override
-    public void descontarBateria() {
-        bateria -= 1;
-        if (bateria == 0) {
-            throw new IllegalStateException(
-                    "O veículo está descarregado. Por favor, encerre a viagem e leve o veículo à estação mais próxima");
+    public void descontarBateria(int minutos) {
+        bateria -= minutos;
+        if (bateria <= 0) {
+            bateria = 0;
+            throw new IllegalStateException("O veículo está descarregado.");
         }
+
     }
 
     @Override
@@ -35,7 +36,7 @@ public class BicicletaEletrica extends Veiculo implements Recarregavel{
         return 0.3;
     }
 
-    @Override 
+    @Override
     public boolean liberar() {
         if (bateria < 20) {
             System.out.println("O veículo só pode ser liberado com bateria de 20% ou mais.");

@@ -19,30 +19,31 @@ public class Viagem {
         if (veiculo.liberar()) {
             this.emAndamento = true;
             estacaoOrigem.removerVeiculo(veiculo);
-            int minutos = 0;
-            try {
-                while (emAndamento) {
-                    minutos ++;
-                    if (veiculo instanceof Recarregavel) {
-                        ((Recarregavel) veiculo).descontarBateria();
-                    }
-                }
-            } catch (IllegalStateException e) {
-                System.out.println(e.getMessage());
-                this.emAndamento = false;
-                this.termino = this.inicio + (minutos * 60);
-            }
         }
+
     }
 
     public void encerrar(int termino, Estacao destino) {
         this.emAndamento = false;
         this.termino = termino * 60; // Convertendo para minutos
         this.estacaoDestino = destino;
+        int minutos = duracaoTotal();
+            try {
+                if (veiculo instanceof Recarregavel) {
+                    ((Recarregavel) veiculo).descontarBateria(minutos);
+                }
+            } catch (IllegalStateException e) {
+                System.out.println("Aviso: " + e.getMessage());
+            }
         estacaoDestino.adicionarVeiculo(veiculo);
-        System.out.println("Viagem finalizada ás/ao " + this.termino + " na estação " + estacaoDestino);
+        System.out.println("Viagem finalizada ás/ao " + this.termino + " com o valor de R$ " + valorCobrado());
+        try {
+            usuario.getCarteira().pagarViagem(valorCobrado());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage() + " Recarregue sua carteira para pagar a viagem.");
+        }
     }
-
+    
     public int getInicio() {
         return inicio;
     }
@@ -77,7 +78,8 @@ public class Viagem {
     }
 
     public double valorCobrado() {
-        return duracaoTotal() * veiculo.valorPorMin();
+        int minutos = duracaoTotal();
+        return usuario.getPlano().calcularValor(veiculo, minutos);  
     }
 
 }

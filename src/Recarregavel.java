@@ -1,5 +1,5 @@
 public interface Recarregavel {
     int bateriaAtual();
-    void descontarBateria();
+    void descontarBateria(int minutos);
     void recarregar();
 }

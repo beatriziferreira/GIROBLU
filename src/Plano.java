@@ -1,13 +1,4 @@
 public abstract class Plano {
-    private String descricao;
-
-    public Plano(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
     
-    
+    public abstract double calcularValor(Veiculo veiculo, int minutos);
 }

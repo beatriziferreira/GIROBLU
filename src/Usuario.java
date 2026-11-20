@@ -23,8 +23,8 @@ public class Usuario {
         return email;
     }
 
-    public int idCarteira() {
-        return carteira.getId();
+    public Carteira getCarteira() {
+        return carteira;
     }
 
 
