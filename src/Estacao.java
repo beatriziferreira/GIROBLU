@@ -23,17 +23,25 @@ public class Estacao {
     }
 
     public void adicionarVeiculo(Veiculo veiculo) {
+        if (veiculo == null){
+            throw new IllegalArgumentException("Veículo inválido.");
+        }
+        if (veiculo.isEstaEmUmaEstacao()){
+            System.out.println("O veículo já está em outra estação.");
+        }
         if (veiculos.size() < qtdVagas) {
             veiculos.add(veiculo);
-            System.out.println("Veículo adicionado: " + veiculo.getDescricao());
+            veiculo.estaEmUmaEstacao();
+            System.out.println("Veículo adicionado: " + veiculo.toString());
         } else {
             throw new IllegalStateException("Não há vagas disponíveis na estação " + nome);
         }
+
     }
 
     public void removerVeiculo(Veiculo veiculo) {
         if (veiculos.remove(veiculo)) {
-            System.out.println("Veículo removido: " + veiculo.getDescricao());
+            System.out.println("Veículo removido: " + veiculo.toString());
         } else {
             System.out.println("Veículo não encontrado na estação " + nome);
         }

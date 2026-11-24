@@ -1,8 +1,8 @@
 public class BicicletaEletrica extends Veiculo implements Recarregavel {
     private int bateria;
 
-    public BicicletaEletrica(String descricao) {
-        super(descricao);
+    public BicicletaEletrica() {
+        super();
         this.bateria = 100;
     }
 
@@ -43,5 +43,10 @@ public class BicicletaEletrica extends Veiculo implements Recarregavel {
             return false;
         }
         return super.liberar();
+    }
+
+    @Override
+    public String toString() {
+        return "Bicicleta elétrica [Código: " + getCodigo() + "]";
     }
 }

@@ -4,10 +4,10 @@ public class Usuario {
     private Plano plano;
     private Carteira carteira;
    
-    public Usuario(String nome, String email, Plano plano) {
+    public Usuario(String nome, String email) {
         this.nome = nome;
         this.email = email;
-        this.plano = plano;
+        this.plano = new PlanoAvulso();
         this.carteira = new Carteira();
     }
 
@@ -25,6 +25,14 @@ public class Usuario {
 
     public Carteira getCarteira() {
         return carteira;
+    }
+
+    public void mudarPlano(int opcao){
+        if (opcao == 1){
+            plano = new PlanoUniversitário();
+        } else if (opcao == 2){
+            plano = new PlanoMensal();
+        }
     }
 
 

@@ -1,14 +1,16 @@
 
 public abstract class Veiculo {
     private int codigo;
-    private String descricao;
+    private static int qtdVeiculos;
     private String status;
     private Usuario usuario;
+    private boolean estaEmUmaEstacao;
 
-    public Veiculo(String descricao) {
-        this.descricao = descricao;
+    public Veiculo() {
         this.status = "Disponível";
-        this.codigo ++;
+        qtdVeiculos ++;
+        this.codigo = qtdVeiculos;
+        this.estaEmUmaEstacao = false;
     }
 
     public boolean liberar(){
@@ -34,10 +36,6 @@ public abstract class Veiculo {
         return codigo;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
     public abstract double taxaDesbloqueio();
 
     public abstract double valorPorMin();
@@ -54,5 +52,12 @@ public abstract class Veiculo {
         return usuario;
     }
 
+    public boolean isEstaEmUmaEstacao(){
+        return estaEmUmaEstacao;
+    }
+
+    public void estaEmUmaEstacao(){
+        estaEmUmaEstacao = true;
+    }
     
 }

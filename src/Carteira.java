@@ -25,7 +25,8 @@ public class Carteira {
         return id;
     }
 
-    public void adicionarRecarga(Recarga recarga) {
+    public void adicionarRecarga(double valor) {
+        Recarga recarga = new Recarga(null, null, valor);
         recargas.add(recarga);
         saldo += recarga.getValor();
         System.out.println("Recarga adicionada: " + recarga.getValor() + " em " + recarga.getData() + " às " + recarga.getHora());
