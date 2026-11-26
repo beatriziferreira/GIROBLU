@@ -6,6 +6,12 @@ public class Estacao {
     ArrayList<Veiculo> veiculos = new ArrayList<>(qtdVagas);
     
     public Estacao(String nome, int qtdVagas) {
+        if(nome == null || nome.isEmpty()){
+            throw new IllegalArgumentException("Nome da estação inválido.");
+        }
+        if(qtdVagas <= 0){
+            throw new IllegalArgumentException("Quantidade de vagas inválida.");
+        }
         this.nome = nome;
         this.qtdVagas = qtdVagas;
     }
@@ -40,6 +46,9 @@ public class Estacao {
     }
 
     public void removerVeiculo(Veiculo veiculo) {
+        if (veiculo == null){
+            throw new IllegalArgumentException("Veículo inválido.");
+        }
         if (veiculos.remove(veiculo)) {
             System.out.println("Veículo removido: " + veiculo.toString() + " da estação " + nome);
         } else {

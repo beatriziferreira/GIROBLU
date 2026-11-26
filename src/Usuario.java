@@ -4,10 +4,10 @@ public class Usuario {
     private Plano plano;
     private Carteira carteira;
    
-    public Usuario(String nome, String email) {
+    public Usuario(String nome, String email, Plano plano) {
         this.nome = nome;
         this.email = email;
-        this.plano = new PlanoAvulso();
+        this.plano = plano;
         this.carteira = new Carteira();
     }
 
@@ -32,6 +32,10 @@ public class Usuario {
             plano = new PlanoUniversitário();
         } else if (opcao == 2){
             plano = new PlanoMensal();
+        } else if (opcao == 3){
+            plano = new PlanoAvulso();
+        } else {
+            throw new IllegalArgumentException("Opção inválida. Plano não alterado.");
         }
     }
 

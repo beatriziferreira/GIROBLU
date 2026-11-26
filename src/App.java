@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class App {
@@ -13,13 +14,18 @@ public class App {
         estacao2.adicionarVeiculo(v2);
         estacao.adicionarVeiculo(v3);
 
+        Plano plano1 = new PlanoAvulso();
+        Plano plano2 = new PlanoUniversitário();
+        Plano plano3 = new PlanoMensal();
+
         System.out.println(v1.getStatus());
         System.out.println(v2.getStatus());
         System.out.println(v3.getStatus());
+        System.out.println("\n");
 
-        Usuario u1 = new Usuario("Carla", "carla@gmail.com");
+        Usuario u1 = new Usuario("Carla", "carla@gmail.com", plano1);
         
-        u1.getCarteira().adicionarRecarga(200);
+        u1.getCarteira().adicionarRecarga(LocalDate.now(), LocalTime.now(), 100);
 
         Viagem v = new Viagem(LocalTime.now(), u1, v2, estacao2);
         v.iniciar();
@@ -30,32 +36,35 @@ public class App {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage() + " Recarregue sua carteira para pagar a viagem.");
         }
+        System.out.println("\n");
 
-        Usuario u2 = new Usuario("Ana", "ana@gmai.com");
+        Usuario u2 = new Usuario("Ana", "ana@gmai.com", plano2);
         u2.mudarPlano(1);
-        u2.getCarteira().adicionarRecarga(5);
-        Viagem vi2 = new Viagem(LocalTime.now(), u2, v1, estacao);
+        u2.getCarteira().adicionarRecarga(LocalDate.now(), LocalTime.now(), 100);
+        Viagem vi2 = new Viagem(LocalTime.now(), u2, v3, estacao);
         vi2.iniciar();
         vi2.encerrar(LocalTime.now().plusMinutes(25), estacao2);
+        System.out.println("\n");
 
-        Usuario u3 = new Usuario("Bruno", "bruno@gmail.com");
-        u3.mudarPlano(2);
+        Usuario u3 = new Usuario("Bruno", "bruno@gmail.com", plano3);
         Viagem vi3 = new Viagem(LocalTime.now(), u3, v1, estacao);
         vi3.iniciar();
         vi3.encerrar(LocalTime.now().plusMinutes(20), estacao2);
+        System.out.println("\n");
 
         ((Recarregavel) v1).recarregar();
-        Usuario u4 = new Usuario("Diego", "diego@gmail.com");
+        Usuario u4 = new Usuario("Diego", "diego@gmail.com", plano2);
         u4.mudarPlano(1);
-        Viagem vi4 = new Viagem(LocalTime.now(), u3, v1, estacao2);
+        Viagem vi4 = new Viagem(LocalTime.now(), u4, v1, estacao2);
         vi4.iniciar();
         vi4.encerrar(LocalTime.now().plusMinutes(10), estacao);
+        System.out.println("\n");
 
-        Usuario u5 = new Usuario("Eduardo", "edu@gmail.com");
-        u5.mudarPlano(2);
+        Usuario u5 = new Usuario("Eduardo", "edu@gmail.com", plano3);
         Viagem vi5 = new Viagem(LocalTime.now(), u5, v2, estacao);
         vi5.iniciar();
         vi5.encerrar(LocalTime.now().plusMinutes(10), estacao2);
+        System.out.println("\n");
 
     }
 }

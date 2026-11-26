@@ -12,7 +12,7 @@ public abstract class Veiculo {
         this.estaEmUmaEstacao = false;
     }
 
-    public boolean liberar(){
+    public boolean liberar() throws BateriaInsuficienteException{
         if (status.equals("Em uso")){
             System.out.println("O veículo já está em uso.");
             return false;

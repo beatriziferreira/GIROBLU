@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Carteira {
@@ -28,11 +30,11 @@ public class Carteira {
         return id;
     }
 
-    public void adicionarRecarga(double valor) {
-        Recarga recarga = new Recarga(null, null, valor);
+    public void adicionarRecarga(LocalDate data, LocalTime hora, double valor) {
+        Recarga recarga = new Recarga(LocalDate.now(), LocalTime.now(), valor);
         recargas.add(recarga);
         saldo += recarga.getValor();
-        System.out.println("Recarga adicionada: " + recarga.getValor() + " em " + recarga.getData() + " às " + recarga.getHora());
-        System.out.println("Novo saldo: " + saldo);
+        System.out.println("Recarga adicionada: " + String.format("%.2f", recarga.getValor()) + " em " + recarga.getData() + " às " + recarga.getHora().getHour() + ":" + recarga.getHora().getMinute());
+        System.out.println("Novo saldo: " + String.format("%.2f", saldo));
     }
 }

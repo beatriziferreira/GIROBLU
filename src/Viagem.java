@@ -9,6 +9,7 @@ public class Viagem {
     private Estacao estacaoOrigem;
     private Estacao estacaoDestino;
     private boolean emAndamento;
+    private boolean finalizada;
 
     public Viagem(LocalTime inicio, Usuario usuario, Veiculo veiculo, Estacao estacaoOrigem) {
         this.inicio = inicio; 
@@ -18,15 +19,32 @@ public class Viagem {
     }
 
     public void iniciar() {
-        if (veiculo.liberar()) {
-            this.emAndamento = true;
-            estacaoOrigem.removerVeiculo(veiculo);
+        if (finalizada) {
+            throw new IllegalStateException("A viagem já foi finalizada.");
         }
-
+        try {
+            if (veiculo.liberar()) {
+                estacaoOrigem.removerVeiculo(veiculo);
+                emAndamento = true;
+                System.out.println("Viagem iniciada ás/ao " + this.inicio.getHour() + ":" + this.inicio.getMinute() + " com o veículo " + veiculo.toString() + " pelo usuário " + usuario.getNome() + " na estação " + estacaoOrigem.getNome());
+            } else {
+                System.out.println("Não foi possível iniciar a viagem. O veículo não pôde ser liberado.");
+            }
+        } catch (BateriaInsuficienteException e) {
+            System.out.println(e.getMessage());
+        }
+       
     }
 
     public void encerrar(LocalTime termino, Estacao destino) {
+        if (!emAndamento){
+            throw new IllegalStateException("A viagem não está em andamento.");
+        }
+        if (termino == null || destino == null){
+            throw new IllegalArgumentException("Termino e/ou destino não podem ser nulos.");
+        }
         this.emAndamento = false;
+        this.finalizada = true;
         this.termino = termino; 
         this.estacaoDestino = destino;
         veiculo.finalizarUso();
@@ -37,9 +55,10 @@ public class Viagem {
                 }
             } catch (IllegalStateException e) {
                 System.out.println("Aviso: " + e.getMessage());
-            }
+            
         estacaoDestino.adicionarVeiculo(veiculo);
         System.out.println("Viagem finalizada ás/ao " + this.termino.getHour() + ":" + this.termino.getMinute() + " com o valor de R$ " + String.format("%.2f", valorCobrado()) + " e duração de " + duracaoTotal() + " minutos.");
+    }
 
         
     }

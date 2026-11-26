@@ -2,6 +2,9 @@ public class PatineteEletrico extends Veiculo implements Recarregavel {
     private int bateria;
 
     public PatineteEletrico(int bateria) {
+        if(bateria < 0 || bateria > 100){
+            throw new IllegalArgumentException("A bateria deve estar entre 0 e 100.");
+        }
         super();
         this.bateria = bateria;
     }
@@ -36,10 +39,9 @@ public class PatineteEletrico extends Veiculo implements Recarregavel {
     }
 
     @Override
-    public boolean liberar() {
+    public boolean liberar() throws BateriaInsuficienteException {
         if (bateria < 20) {
-            System.out.println("O veículo só pode ser liberado com 20% de bateria ou mais.");
-            return false;
+            throw new BateriaInsuficienteException();
         }
         return super.liberar();
     }
