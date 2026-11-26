@@ -3,7 +3,6 @@ public abstract class Veiculo {
     private int codigo;
     private static int qtdVeiculos;
     private String status;
-    private Usuario usuario;
     private boolean estaEmUmaEstacao;
 
     public Veiculo() {
@@ -30,6 +29,7 @@ public abstract class Veiculo {
             System.out.println("O veículo não está em uso.");
         }
         status = "Disponível";
+        estaEmUmaEstacao = false;
     }
 
     public int getCodigo() {
@@ -46,10 +46,6 @@ public abstract class Veiculo {
 
     public void enviarManutenção(){
         status = "Em Manutenção";
-    }
-
-    public Usuario getUsuario(){
-        return usuario;
     }
 
     public boolean isEstaEmUmaEstacao(){

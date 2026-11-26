@@ -1,9 +1,9 @@
 public class PatineteEletrico extends Veiculo implements Recarregavel {
     private int bateria;
 
-    public PatineteEletrico() {
+    public PatineteEletrico(int bateria) {
         super();
-        this.bateria = 100; // Inicializa a bateria com 100%
+        this.bateria = bateria;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class PatineteEletrico extends Veiculo implements Recarregavel {
 
     @Override
     public String toString() {
-        return "Patinete elétrico [Código: " + getCodigo() + "]";
+        return "Patinete elétrico [Código: " + getCodigo() + "] Bateria: " + bateria + "%";
     }
     
 }

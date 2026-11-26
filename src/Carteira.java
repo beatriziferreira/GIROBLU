@@ -3,11 +3,13 @@ import java.util.ArrayList;
 public class Carteira {
     private double saldo;
     private int id;
+    private static int contadorId;
     private ArrayList<Recarga> recargas = new ArrayList<>();
 
     public Carteira() {
         this.saldo = 0.0;
-        this.id ++;
+        contadorId ++;
+        this.id = contadorId;
     }
 
     public double getSaldo() {
@@ -19,6 +21,7 @@ public class Carteira {
             throw new IllegalArgumentException("Saldo insuficiente.");
         }
         saldo -= valorCobrado;
+        System.out.println("Pagamento realizado com sucesso. Novo saldo: " + saldo);
     }
 
     public int getId() {

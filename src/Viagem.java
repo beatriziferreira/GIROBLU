@@ -1,15 +1,17 @@
 
+import java.time.LocalTime;
+
 public class Viagem {
-    private int inicio;
-    private int termino;
+    private LocalTime inicio;
+    private LocalTime termino;
     private Usuario usuario;
     private Veiculo veiculo;
     private Estacao estacaoOrigem;
     private Estacao estacaoDestino;
     private boolean emAndamento;
 
-    public Viagem(int inicio, Usuario usuario, Veiculo veiculo, Estacao estacaoOrigem) {
-        this.inicio = inicio * 60; // Convertendo para minutos
+    public Viagem(LocalTime inicio, Usuario usuario, Veiculo veiculo, Estacao estacaoOrigem) {
+        this.inicio = inicio; 
         this.usuario = usuario;
         this.veiculo = veiculo;
         this.estacaoOrigem = estacaoOrigem;
@@ -23,10 +25,11 @@ public class Viagem {
 
     }
 
-    public void encerrar(int termino, Estacao destino) {
+    public void encerrar(LocalTime termino, Estacao destino) {
         this.emAndamento = false;
-        this.termino = termino * 60; // Convertendo para minutos
+        this.termino = termino; 
         this.estacaoDestino = destino;
+        veiculo.finalizarUso();
         int minutos = duracaoTotal();
             try {
                 if (veiculo instanceof Recarregavel) {
@@ -36,19 +39,16 @@ public class Viagem {
                 System.out.println("Aviso: " + e.getMessage());
             }
         estacaoDestino.adicionarVeiculo(veiculo);
-        System.out.println("Viagem finalizada ás/ao " + this.termino + " com o valor de R$ " + valorCobrado());
-        try {
-            usuario.getCarteira().pagarViagem(valorCobrado());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage() + " Recarregue sua carteira para pagar a viagem.");
-        }
+        System.out.println("Viagem finalizada ás/ao " + this.termino.getHour() + ":" + this.termino.getMinute() + " com o valor de R$ " + String.format("%.2f", valorCobrado()) + " e duração de " + duracaoTotal() + " minutos.");
+
+        
     }
     
-    public int getInicio() {
+    public LocalTime getInicio() {
         return inicio;
     }
 
-    public int getTermino() {
+    public LocalTime getTermino() {
         return termino;
     }
 
@@ -73,7 +73,7 @@ public class Viagem {
     }
 
     public int duracaoTotal() {
-        int totalMinutos = termino - inicio;
+        int totalMinutos = termino.getMinute() - inicio.getMinute() + (termino.getHour() - inicio.getHour()) * 60;
         return totalMinutos;
     }
 

@@ -32,7 +32,7 @@ public class Estacao {
         if (veiculos.size() < qtdVagas) {
             veiculos.add(veiculo);
             veiculo.estaEmUmaEstacao();
-            System.out.println("Veículo adicionado: " + veiculo.toString());
+            System.out.println("Veículo adicionado: " + veiculo.toString() + " na estação " + nome);
         } else {
             throw new IllegalStateException("Não há vagas disponíveis na estação " + nome);
         }
@@ -41,7 +41,7 @@ public class Estacao {
 
     public void removerVeiculo(Veiculo veiculo) {
         if (veiculos.remove(veiculo)) {
-            System.out.println("Veículo removido: " + veiculo.toString());
+            System.out.println("Veículo removido: " + veiculo.toString() + " da estação " + nome);
         } else {
             System.out.println("Veículo não encontrado na estação " + nome);
         }
